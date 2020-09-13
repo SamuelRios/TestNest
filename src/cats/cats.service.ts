@@ -54,9 +54,11 @@ export class CatsService {
         try {
             let cat = await this.catsRepository.findOne(id);
             if(cat){
+                let editedCat = await this.catsRepository.create(editCatDto);
                 let dog = await this.dogsRepository.findOne(dogid);
-                cat.friend = dog;
-                return await this.catsRepository.save(cat);
+                editedCat.friend = dog;
+                editedCat.id = cat.id;
+                return await this.catsRepository.save(editedCat);
             } else throw Error("não encontramos o gato para editar.");
         }catch (error) {
             throw new HttpException(error.message, 404);
