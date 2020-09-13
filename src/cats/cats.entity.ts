@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { OneToOne, JoinColumn } from 'typeorm';
+import { join } from 'path';
+import { Entity, Column, PrimaryGeneratedColumn, JoinTable} from 'typeorm';
+import { ManyToMany } from 'typeorm';
 import { Dogs } from '../dogs/dogs.entity';
 
 @Entity()
@@ -11,7 +12,7 @@ export class Cats {
     @Column()
     age: number;
 
-    @OneToOne(type => Dogs, dog => dog.friend)
-    @JoinColumn()
-    friend: Dogs;
+    @ManyToMany(type => Dogs, dog => dog.friend)
+    @JoinTable()
+    friend: Dogs[];
 }
