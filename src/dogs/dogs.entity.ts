@@ -1,5 +1,5 @@
 import { Cats } from 'src/cats/cats.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Dogs {
@@ -13,6 +13,6 @@ export class Dogs {
     age: number;
 
     
-    @ManyToMany(type => Cats, cat => cat.friend)
-    friend: Cats[];
+    @ManyToOne(type => Cats, cat => cat.friend)
+    friend: Cats;
 }

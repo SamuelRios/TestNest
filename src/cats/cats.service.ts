@@ -18,8 +18,7 @@ export class CatsService {
         try{
             return  await this.catsRepository.find({ relations: ["friend"] });
         }catch (error) {
-            alert('erro ao buscar os dados.');
-            return [];
+            throw new HttpException(error.message, 404);
         }
     }
 

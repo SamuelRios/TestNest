@@ -44,16 +44,11 @@ export class DogsService {
 
     async editADog(id:number , catid, editDogDto: CreateDogsDto): Promise<Dogs> {
         try {
-            let dog = await this.dogsRepository.findOne({relations:["friend"], where:{id:id}});
+            let dog = await this.dogsRepository.findOne(id);
             if(dog){
                 let editedDog = await this.dogsRepository.create(editDogDto);
                 let cat = await this.catsRepository.findOne(catid);
-                editedDog.friend = dog.friend;
-                if(editedDog.friend){
-                    editedDog.friend.push(cat);
-                }else {
-                    editedDog.friend = [cat];
-                }
+                editedDog.friend = cat;
                 editedDog.id = dog.id;
                 return await this.dogsRepository.save(editedDog);
             } else throw Error("não encontramos o gato para editar.");
